@@ -11,8 +11,11 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "crypted_note_parts", force: :cascade do |t|
-    t.integer "crypted_note_part_id"
+    t.bigint "crypted_note_part_id"
     t.text "crypted_content"
     t.integer "part_index"
     t.string "owner_email"
@@ -22,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
   end
 
   create_table "crypted_notes", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.text "description"
     t.text "crypted_content"
     t.datetime "created_at", null: false

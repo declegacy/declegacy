@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "decryptedContent"]
+  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "decryptedContent", "errorContent"]
 
   connect() {
     if(this.hasRawContentTarget) {
@@ -18,13 +18,19 @@ export default class extends Controller {
       event.preventDefault();
     }
 
-    let decrypted = await this.decryptText(this.encryptionPasswordTarget.value, this.cryptedContentTarget.value)
-
+    let decrypted = null
+    try {
+      decrypted = await this.decryptText(this.encryptionPasswordTarget.value, this.cryptedContentTarget.value)
+    }
+    catch(err) {
+      this.decryptedContentTarget.style.display = "none"
+      this.errorContentTarget.style.display = "block"
+    }
+    
     if(decrypted) {
       this.decryptedContentTarget.innerHTML = decrypted
       this.decryptedContentTarget.style.display = "block"
-    } else {
-      this.decryptedContentTarget.style.display = "none"
+      this.errorContentTarget.style.display = "none"
     }
   }
 
