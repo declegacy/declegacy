@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+ textarea, code {
+  width: 600px;
+  padding: 5px;
+ }
+ textarea {
+  height: 50px;
+ }
+
+ code {
+  background: black;
+  color: white;
+  display: block;
+ }

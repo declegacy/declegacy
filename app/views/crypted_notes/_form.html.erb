@@ -1,4 +1,5 @@
-<%= form_with(model: crypted_note) do |form| %>
+<%= form_with(model: crypted_note, data: {controller: "crypted-note"}) do |form| %>
+
   <% if crypted_note.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(crypted_note.errors.count, "error") %> prohibited this crypted_note from being saved:</h2>
@@ -11,21 +12,35 @@
     </div>
   <% end %>
 
-  <%= form.label :query, "Description:" %><br/>
-  <%= form.text_area :description %><br/><br/>
+  <% unless crypted_note.persisted? %>
+    <%= form.label :query, "Description:" %><br/>
+    <%= form.text_area :description %><br/><br/>
 
-  <%= form.label :crypted_note_raw_content, "Raw Content (no encryption):" %><br/>
-  <textarea id="crypted_note_raw_content"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+    <%= form.label :crypted_note_raw_content, "Raw Content (no encryption):" %><br/>
+    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+    <br/><br/>
+  <% end %>
+
+
+
+  <%= form.label :crypted_note_encryption_password, "Encryption Password:" %><br/>
+  <input autocomplete="off" autofill="off" id="crypted_note_encryption_password" data-crypted-note-target="encryptionPassword" data-action="input->crypted-note#<%= crypted_note.persisted? ? "tryToDecrypt" : "tryToEncrypt" %>" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
   <br/><br/>
 
-  <%= form.label :crypted_note_encryption_password, "Encyption Password:" %><br/>
-  <input id="crypted_note_encryption_password" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
-  <br/><br/>
+  <div data-crypted-note-target="generatedContentContainer">
+    <%= form.label :query, "Crypted Content:" %><br/>
+    <%= form.text_area :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %><br/><br/>
+    <div data-crypted-note-target="codeTemplate" style="display:none"><%= render "executable_code"%></div>
+    
+    <h3>Generated code (can be used in browser console with JS)</h3>
+    <code data-crypted-note-target="generatedDecryptionCode"></code>
 
-  <%= form.label :query, "Crypted Content:" %><br/>
-  <%= form.text_area :crypted_content %><br/><br/>
+    <br/><br/>
+  </div>
+
+  <div data-crypted-note-target="decryptedContent" style="border: 1px solid green; padding: 5px; background: #e1fadc; display:none"></div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit unless crypted_note.persisted? %>
   </div>
 <% end %>

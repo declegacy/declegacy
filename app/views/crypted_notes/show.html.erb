@@ -1,10 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @crypted_note %>
+<%= @crypted_note.description %>
+
 
 <div>
-  <%= link_to "Edit this crypted note", edit_crypted_note_path(@crypted_note) %> |
+  <%#= link_to "Edit this crypted note", edit_crypted_note_path(@crypted_note) %> 
   <%= link_to "Back to crypted notes", crypted_notes_path %>
 
-  <%= button_to "Destroy this crypted note", @crypted_note, method: :delete %>
+  <%#= button_to "Destroy this crypted note", @crypted_note, method: :delete %>
 </div>

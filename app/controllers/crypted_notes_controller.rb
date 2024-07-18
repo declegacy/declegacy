@@ -25,7 +25,9 @@ class CryptedNotesController < ApplicationController
 
     respond_to do |format|
       if @crypted_note.save
-        format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully created." }
+        # format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully created." }
+        format.html { redirect_to crypted_notes_url, notice: "Crypted note was successfully created." }
+
         format.json { render :show, status: :created, location: @crypted_note }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -35,27 +37,27 @@ class CryptedNotesController < ApplicationController
   end
 
   # PATCH/PUT /crypted_notes/1 or /crypted_notes/1.json
-  def update
-    respond_to do |format|
-      if @crypted_note.update(crypted_note_params)
-        format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully updated." }
-        format.json { render :show, status: :ok, location: @crypted_note }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @crypted_note.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @crypted_note.update(crypted_note_params)
+  #       format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @crypted_note }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @crypted_note.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /crypted_notes/1 or /crypted_notes/1.json
-  def destroy
-    @crypted_note.destroy
+  # def destroy
+  #   @crypted_note.destroy
 
-    respond_to do |format|
-      format.html { redirect_to crypted_notes_url, notice: "Crypted note was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to crypted_notes_url, notice: "Crypted note was successfully destroyed." }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
 
