@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_18_064646) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
+  create_table "crypted_note_parts", force: :cascade do |t|
+    t.integer "crypted_note_part_id"
+    t.text "crypted_content"
+    t.integer "part_index"
+    t.string "owner_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crypted_note_part_id"], name: "index_crypted_note_parts_on_crypted_note_part_id"
+  end
+
+  create_table "crypted_notes", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "description"
+    t.text "crypted_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_crypted_notes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

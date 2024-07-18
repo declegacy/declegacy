@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  crypted_content: MyText
+  part_index: 1
+  owner_email: MyString
+
+two:
+  crypted_content: MyText
+  part_index: 1
+  owner_email: MyString

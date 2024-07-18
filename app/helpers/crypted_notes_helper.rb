@@ -1,0 +1,2 @@
+module CryptedNotesHelper
+end

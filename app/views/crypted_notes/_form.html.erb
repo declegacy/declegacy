@@ -1,0 +1,31 @@
+<%= form_with(model: crypted_note) do |form| %>
+  <% if crypted_note.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(crypted_note.errors.count, "error") %> prohibited this crypted_note from being saved:</h2>
+
+      <ul>
+        <% crypted_note.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :query, "Description:" %><br/>
+  <%= form.text_area :description %><br/><br/>
+
+  <%= form.label :crypted_note_raw_content, "Raw Content (no encryption):" %><br/>
+  <textarea id="crypted_note_raw_content"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+  <br/><br/>
+
+  <%= form.label :crypted_note_encryption_password, "Encyption Password:" %><br/>
+  <input id="crypted_note_encryption_password" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
+  <br/><br/>
+
+  <%= form.label :query, "Crypted Content:" %><br/>
+  <%= form.text_area :crypted_content %><br/><br/>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

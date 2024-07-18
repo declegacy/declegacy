@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Crypted notes</h1>
+
+<div id="crypted_notes">
+  <% @crypted_notes.each do |crypted_note| %>
+    <%= render crypted_note %>
+  <% end %>
+</div>
+
+<br/>
+
+<%= link_to "New crypted note", new_crypted_note_path %>
