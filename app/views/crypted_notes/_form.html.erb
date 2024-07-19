@@ -12,19 +12,23 @@
     </div>
   <% end %>
 
-  <% unless crypted_note.persisted? %>
+  <%# unless crypted_note.persisted? %>
     <%= form.label :query, "Description:" %><br/>
     <%= form.text_area :description %><br/><br/>
 
+  <div data-crypted-note-target="rawContentContainer">
     <%= form.label :crypted_note_raw_content, "Raw Content (no encryption):" %><br/>
-    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 200px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
     <br/><br/>
-  <% end %>
+  </div>
+  <%# end %>
 
 
 
-  <%= form.label :crypted_note_encryption_password, "Encryption Password:" %><br/>
-  <input autocomplete="off" autofill="off" id="crypted_note_encryption_password" data-crypted-note-target="encryptionPassword" data-action="input->crypted-note#<%= crypted_note.persisted? ? "tryToDecrypt" : "tryToEncrypt" %>" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
+<%= form.label :crypted_note_encryption_password, "Encryption Password:" %><br/>
+  <input autocomplete="off" autofill="off" id="crypted_note_encryption_password" data-crypted-note-target="encryptionPassword" data-action="input->crypted-note#onPasswordInput" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
+  <br/><br/>
+  <div data-crypted-note-target="errorContent" style="display:none; border: 1px solid red; color:red; background: #fadfd2; padding: 5px">Incorrect password</div>
   <br/><br/>
 
   <div data-crypted-note-target="generatedContentContainer">
@@ -38,10 +42,7 @@
     <br/><br/>
   </div>
 
-  <div data-crypted-note-target="errorContent" style="display:none; border: 1px solid red; color:red; background: #fadfd2; padding: 5px">Incorrect password</div>
-  <div data-crypted-note-target="decryptedContent" style="border: 1px solid green; padding: 5px; background: #e1fadc; display:none"></div>
-
-  <div>
-    <%= form.submit unless crypted_note.persisted? %>
+  <div data-crypted-note-target="submitContainer">
+    <%= form.submit %>
   </div>
 <% end %>

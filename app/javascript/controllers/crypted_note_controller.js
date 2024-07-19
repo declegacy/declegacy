@@ -1,14 +1,23 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "decryptedContent", "errorContent"]
+  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "errorContent", "rawContentContainer", "submitContainer"]
 
   connect() {
-    if(this.hasRawContentTarget) {
-      this.tryToEncrypt() 
-    } else {
+    
+
+    if(this.cryptedContentTarget.value) {
       this.populateCode(this.cryptedContentTarget.value)
+      this.rawContentContainerTarget.style.display = "none"
+      this.submitContainerTarget.style.display = "none"
+
+      this.mode = "decrypt"
+    } else {
+      this.mode = "encrypt"
+      this.tryToEncrypt() 
     }
+
+    
 
     this.encryptionKey = null;
   }
@@ -23,13 +32,15 @@ export default class extends Controller {
       decrypted = await this.decryptText(this.encryptionPasswordTarget.value, this.cryptedContentTarget.value)
     }
     catch(err) {
-      this.decryptedContentTarget.style.display = "none"
       this.errorContentTarget.style.display = "block"
     }
     
     if(decrypted) {
-      this.decryptedContentTarget.innerHTML = decrypted
-      this.decryptedContentTarget.style.display = "block"
+      this.rawContentContainerTarget.style.display = "block"
+      this.rawContentTarget.value = decrypted
+      this.submitContainerTarget.style.display = "block"
+      this.encryptionPasswordTarget.disabled = true
+
       this.errorContentTarget.style.display = "none"
     }
   }
@@ -38,32 +49,33 @@ export default class extends Controller {
     this.generatedDecryptionCodeTarget.innerHTML = this.codeTemplateTarget.innerHTML.replace("{{encrypted_content}}", encrypted)
   }
 
-  async tryToEncrypt(event) {
+  async onPasswordInput(event) {
     if(event) {
       event.preventDefault();
     }
+
+    if (this.mode == "encrypt") {
+      this.tryToEncrypt()
+    } else {
+      this.tryToDecrypt()
+    }
+  }
+
+  async tryToEncrypt(event) {
+    
    
     const password = this.encryptionPasswordTarget.value;
     const rawContent = this.rawContentTarget.value;
 
     if (password && rawContent) {
       this.generatedContentContainerTarget.style.display = "block"
-    } else {
-      this.generatedContentContainerTarget.style.display = "none"
-    }
-
-    // const cryptedContent = this.cryptedContentTarget.value;
-
-    // if (cryptedContent) {
-    //   const decrypted = await this.decryptText(password, JSON.parse(cryptedContent));
-    //   this.rawContentTarget.value = decrypted;
-    // } else if (rawContent) {
       const encrypted = await this.encryptText(password, rawContent);
       this.cryptedContentTarget.value = encrypted;
-    // }
-    
-    this.populateCode(encrypted)
-
+  
+      this.populateCode(encrypted)
+    } else {
+      this.generatedContentContainerTarget.style.display = "none"
+    } 
   }
   async encryptText(password, text) {
     const enc = new TextEncoder();
