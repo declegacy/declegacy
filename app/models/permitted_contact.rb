@@ -6,6 +6,10 @@ class PermittedContact < ApplicationRecord
     update!(decrypt_access_requested_at: Time.now)
   end
 
+  def reject_access!
+    update!(decrypt_access_requested_at: nil, decrypt_access_rejected_at: Time.now)
+  end
+
   def auto_approve_decrypt_access_at
     return nil unless decrypt_access_requested_at
 

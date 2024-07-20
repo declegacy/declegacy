@@ -12,15 +12,28 @@
 
   <%= link_to "Decrypt", edit_crypted_note_path(crypted_note) if allow_decrypt %>
   <% if crypted_note.user == current_user %>
-    <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note) %>
+    <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note) %> 
+
+    <% reqested_decrypt_contacts = crypted_note.permitted_contacts.where('decrypt_access_requested_at IS NOT NULL') %> 
+
+    <% reqested_decrypt_contacts.each do |c| %>
+      <span style="color:red"><%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.auto_approve_decrypt_access_at.to_date %> unless you reject it</span>
+      <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+    <% end %>
   <% else %>
-    <%= link_to "Verify", crypted_note_permitted_contact_verify_path(crypted_note, permitted_contact) %>
-    <% if permitted_contact.has_verified_password %>
-      <span style="color:green"> Successfully verified on <%= l permitted_contact.verified_password_at.to_date %> </span>
+    <% unless allow_decrypt %>
+      <%= link_to "Verify", crypted_note_permitted_contact_verify_path(crypted_note, permitted_contact) %>
+      <% if permitted_contact.has_verified_password %>
+        <span style="color:green"> Successfully verified on <%= l permitted_contact.verified_password_at.to_date %> </span>
+      <% end %>
     <% end %>
 
-    <% if permitted_contact.decrypt_access_requested_at %>
-      <span style="color: orange">Decrypt access is pending and will be auto approved on <%= l permitted_contact.auto_approve_decrypt_access_at.to_date %></span>
+    <% if permitted_contact.decrypt_access_requested_at %> 
+      <% if permitted_contact.decrypt_access_granted_at %>
+         
+      <% else %>
+         <span style="color: orange">Decrypt access is pending and will be auto approved on <%= l permitted_contact.auto_approve_decrypt_access_at.to_date %></span>
+      <% end %>
     <% else %>
       <%= button_to "Request Decrypt Permission", crypted_note_permitted_contact_request_access_path(crypted_note, permitted_contact), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
     <% end %>

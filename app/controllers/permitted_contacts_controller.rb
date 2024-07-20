@@ -1,7 +1,7 @@
 class PermittedContactsController < ApplicationController
   before_action :set_crypted_note, except: [:verify, :verify_update, :request_access]
   before_action :set_crypted_note_for_permitted_contact, only: [:verify, :verify_update, :request_access]
-  before_action :set_permitted_contact, only: %i[show edit update destroy]
+  before_action :set_permitted_contact, only: %i[show edit update destroy reject_access]
 
   # GET /permitted_contacts
   def index
@@ -66,6 +66,12 @@ class PermittedContactsController < ApplicationController
     redirect_to root_path, notice: "We have requested decrypt request. If person will not reject the request in 1 month, you will be granted decrypt access automatically."
   end
 
+  def reject_access
+    @permitted_contact.reject_access!
+
+    redirect_to root_path
+  end
+
   private
 
   def set_crypted_note
@@ -79,7 +85,7 @@ class PermittedContactsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_permitted_contact
-    @permitted_contact = @crypted_note.permitted_contacts.find(params[:id])
+    @permitted_contact = @crypted_note.permitted_contacts.find(params[:id] || params[:permitted_contact_id])
   end
 
   # Only allow a list of trusted parameters through.

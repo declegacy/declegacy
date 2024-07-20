@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get "verify"
         patch "verify_update", to: "verify_update"
         post "request_access", to: "request_access"
+        post "reject_access", to: "reject_access"
       end
     end
   end

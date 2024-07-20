@@ -58,7 +58,9 @@ class CryptedNotesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_crypted_note
-    @crypted_note = base_query.find(params[:id])
+    permitted_ids = PermittedContact.where(email: current_user.email).where("decrypt_access_granted_at IS NOT NULL").pluck(:crypted_note_id)
+
+    @crypted_note = CryptedNote.where("user_id = ? or id IN(?)", current_user.id, permitted_ids).find(params[:id])
   end
 
   def base_query
