@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Permitted contacts</h1>
+
+<div id="permitted_contacts">
+  <% @permitted_contacts.each do |permitted_contact| %>
+    <%= render permitted_contact %>
+  <% end %>
+</div>
+
+<br/>
+
+<%= link_to "New permitted contact", new_crypted_note_permitted_contact_path(@crypted_note) %>

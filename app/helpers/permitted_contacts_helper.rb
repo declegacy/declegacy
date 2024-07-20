@@ -1,0 +1,2 @@
+module PermittedContactsHelper
+end

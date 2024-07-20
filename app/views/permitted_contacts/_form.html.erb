@@ -1,0 +1,24 @@
+<%= form_with(model: [crypted_note, permitted_contact]) do |form| %>
+  <% if permitted_contact.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(permitted_contact.errors.count, "error") %> prohibited this permitted_contact from being saved:</h2>
+
+      <ul>
+        <% permitted_contact.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <br/>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

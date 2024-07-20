@@ -1,0 +1,16 @@
+<% 
+  crypted_note = @crypted_note 
+  permitted_contact = @permitted_contact
+%>
+
+<h1>Vefify that you know password to decrypt the content</h1>
+
+<%= form_with(model: [crypted_note, permitted_contact], url: crypted_note_permitted_contact_verify_update_path(crypted_note, permitted_contact), data: {controller: 'verify', verify_short_password_hash_value: @crypted_note.short_password_hash}) do |form| %>
+  <%= render "crypted_notes/password_fields", type: :verify, form: form %>
+
+  <%= form.hidden_field "has_verified_password",  data: { verify_target: "hasVerifiedPassword"} %>
+
+  <div>
+    <%= form.submit "Verify password", data: { action: "verify#onSubmit:prevent"} %>
+  </div>
+<% end %>

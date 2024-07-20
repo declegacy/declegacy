@@ -3,7 +3,7 @@ class CryptedNotesController < ApplicationController
 
   # GET /crypted_notes or /crypted_notes.json
   def index
-    @crypted_notes = current_user.crypted_notes
+    @crypted_notes = base_query
   end
 
   # GET /crypted_notes/1 or /crypted_notes/1.json
@@ -38,6 +38,8 @@ class CryptedNotesController < ApplicationController
 
   # PATCH/PUT /crypted_notes/1 or /crypted_notes/1.json
   def update
+    raise "no access" if @crypted_note.user_id != current_user.id
+
     @crypted_note.update(crypted_note_params)
     redirect_to crypted_notes_url, notice: "Crypted note was successfully updated."
   end
@@ -56,11 +58,17 @@ class CryptedNotesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_crypted_note
-    @crypted_note = current_user.crypted_notes.find(params[:id])
+    @crypted_note = base_query.find(params[:id])
+  end
+
+  def base_query
+    permitted_ids = PermittedContact.where(email: current_user.email).pluck(:crypted_note_id)
+
+    CryptedNote.where("user_id = ? or id IN(?)", current_user.id, permitted_ids)
   end
 
   # Only allow a list of trusted parameters through.
   def crypted_note_params
-    params.fetch(:crypted_note).permit(:description, :crypted_content)
+    params.fetch(:crypted_note).permit(:description, :crypted_content, :short_password_hash)
   end
 end

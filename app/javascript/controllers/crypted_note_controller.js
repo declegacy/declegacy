@@ -1,15 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
+import { getShortSHA256Hash } from "./shared_methods.js"
 
 export default class extends Controller {
-  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "errorContent", "rawContentContainer", "submitContainer"]
+  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "errorContent", "rawContentContainer", "submitContainer", "shortPasswordHash"]
 
   connect() {
-    
-
     if(this.cryptedContentTarget.value) {
       this.populateCode(this.cryptedContentTarget.value)
       this.rawContentContainerTarget.style.display = "none"
-      this.submitContainerTarget.style.display = "none"
+
+      if (this.hasSubmitContainerTarget) {
+        this.submitContainerTarget.style.display = "none"
+      }
+      
 
       this.mode = "decrypt"
     } else {
@@ -38,7 +41,11 @@ export default class extends Controller {
     if(decrypted) {
       this.rawContentContainerTarget.style.display = "block"
       this.rawContentTarget.value = decrypted
-      this.submitContainerTarget.style.display = "block"
+
+      if (this.hasSubmitContainerTarget) {
+        this.submitContainerTarget.style.display = "block"
+      }
+      
       this.encryptionPasswordTarget.disabled = true
 
       this.errorContentTarget.style.display = "none"
@@ -53,6 +60,8 @@ export default class extends Controller {
     if(event) {
       event.preventDefault();
     }
+
+    this.shortPasswordHashTarget.value = await getShortSHA256Hash(this.encryptionPasswordTarget.value)
 
     if (this.mode == "encrypt") {
       this.tryToEncrypt()
@@ -177,4 +186,11 @@ export default class extends Controller {
     const decrypted = await this.decryptText(password, encrypted);
     this.rawContentTarget.value = decrypted;
   }
+
+
+
+// const myString = 'your-string-here';
+// getSHA256Hash(myString).then(hash => {
+//     console.log(`SHA-256 hash of "${myString}": ${hash}`);
+// });
 }

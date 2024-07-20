@@ -23,13 +23,7 @@
   </div>
   <%# end %>
 
-
-
-<%= form.label :crypted_note_encryption_password, "Encryption Password:" %><br/>
-  <input autocomplete="off" autofill="off" id="crypted_note_encryption_password" data-crypted-note-target="encryptionPassword" data-action="input->crypted-note#onPasswordInput" type="password" /> <!-- name attribute should not be saved in order to not set it to server -->
-  <br/><br/>
-  <div data-crypted-note-target="errorContent" style="display:none; border: 1px solid red; color:red; background: #fadfd2; padding: 5px">Incorrect password</div>
-  <br/><br/>
+  <%= render "password_fields", type: :crypted_note, form: form %>
 
   <div data-crypted-note-target="generatedContentContainer">
     <%= form.label :query, "Crypted Content:" %><br/>
@@ -42,7 +36,9 @@
     <br/><br/>
   </div>
 
+  <% if crypted_note.user == current_user %>
   <div data-crypted-note-target="submitContainer">
     <%= form.submit %>
   </div>
+  <% end %>
 <% end %>

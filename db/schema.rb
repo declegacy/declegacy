@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_20_115051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,7 +30,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
     t.text "crypted_content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "short_password_hash"
     t.index ["user_id"], name: "index_crypted_notes_on_user_id"
+  end
+
+  create_table "permitted_contacts", force: :cascade do |t|
+    t.bigint "crypted_note_id", null: false
+    t.string "email"
+    t.boolean "has_verified_password", default: false
+    t.boolean "require_approval_to_decrypt_content", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "verified_password_at"
+    t.index ["crypted_note_id"], name: "index_permitted_contacts_on_crypted_note_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,4 +57,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_070305) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "permitted_contacts", "crypted_notes"
 end

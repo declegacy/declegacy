@@ -1,0 +1,16 @@
+<div id="<%= dom_id permitted_contact %>">
+  <strong>Email:</strong> <%= permitted_contact.email %>
+  <%#= link_to "Show this permitted contact", [@crypted_note, permitted_contact] %>
+
+  <% if permitted_contact.has_verified_password %>
+    <span style="color:green"> Successfully verified that he knows encryption password on <%= l permitted_contact.verified_password_at.to_date %> </span>
+  <% else %>
+    <span style="color:orange"> User did not yet verify that he knows the secret</span>
+  <% end %>
+
+  <% if permitted_contact.require_approval_to_decrypt_content %> 
+    <span style="color:blue">User is NOT yet allowed to decrypt secret content</span>
+  <% else %>
+    <span style="color:red">User is allowed to decrypt secret content</span>
+  <% end  %>
+</div>

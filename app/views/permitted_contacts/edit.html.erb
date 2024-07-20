@@ -1,0 +1,10 @@
+<h1>Editing permitted contact</h1>
+
+<%= render "form", permitted_contact: @permitted_contact, crypted_note: @crypted_note %>
+
+<br>
+
+<div>
+  <%= link_to "Show this permitted contact", @permitted_contact %> |
+  <%= link_to "Back to permitted contacts", permitted_contacts_path %>
+</div>

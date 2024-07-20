@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @permitted_contact %>
+
+<div>
+  <%= link_to "Edit this permitted contact", edit_permitted_contact_path(@permitted_contact) %> |
+  <%= link_to "Back to permitted contacts", permitted_contacts_path %>
+
+  <%= button_to "Destroy this permitted contact", @permitted_contact, method: :delete %>
+</div>
