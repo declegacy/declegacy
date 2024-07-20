@@ -6,7 +6,7 @@
     permitted_contact = nil
     unless allow_decrypt 
       permitted_contact = crypted_note.permitted_contacts.find_by(email: current_user.email)
-      allow_decrypt = true unless permitted_contact.require_approval_to_decrypt_content 
+      allow_decrypt = true if permitted_contact.decrypt_access_granted_at 
     end 
   %>
 
@@ -17,6 +17,12 @@
     <%= link_to "Verify", crypted_note_permitted_contact_verify_path(crypted_note, permitted_contact) %>
     <% if permitted_contact.has_verified_password %>
       <span style="color:green"> Successfully verified on <%= l permitted_contact.verified_password_at.to_date %> </span>
+    <% end %>
+
+    <% if permitted_contact.decrypt_access_requested_at %>
+      <span style="color: orange">Decrypt access is pending and will be auto approved on <%= l permitted_contact.auto_approve_decrypt_access_at.to_date %></span>
+    <% else %>
+      <%= button_to "Request Decrypt Permission", crypted_note_permitted_contact_request_access_path(crypted_note, permitted_contact), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
     <% end %>
   <% end %>
   

@@ -1,6 +1,6 @@
 class PermittedContactsController < ApplicationController
-  before_action :set_crypted_note, except: [:verify, :verify_update]
-  before_action :set_crypted_note_for_verify, only: [:verify, :verify_update]
+  before_action :set_crypted_note, except: [:verify, :verify_update, :request_access]
+  before_action :set_crypted_note_for_permitted_contact, only: [:verify, :verify_update, :request_access]
   before_action :set_permitted_contact, only: %i[show edit update destroy]
 
   # GET /permitted_contacts
@@ -60,13 +60,19 @@ class PermittedContactsController < ApplicationController
     redirect_to root_path, notice: "You successfully verifed the password"
   end
 
+  def request_access
+    @permitted_contact.request_for_access!
+
+    redirect_to root_path, notice: "We have requested decrypt request. If person will not reject the request in 1 month, you will be granted decrypt access automatically."
+  end
+
   private
 
   def set_crypted_note
     @crypted_note = current_user.crypted_notes.find(params[:crypted_note_id])
   end
 
-  def set_crypted_note_for_verify
+  def set_crypted_note_for_permitted_contact
     @permitted_contact = PermittedContact.find_by(email: current_user.email, id: params[:permitted_contact_id], crypted_note_id: params[:crypted_note_id])
     @crypted_note = @permitted_contact.crypted_note
   end

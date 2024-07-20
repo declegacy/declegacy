@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :permitted_contacts do
         get "verify"
         patch "verify_update", to: "verify_update"
+        post "request_access", to: "request_access"
       end
     end
   end

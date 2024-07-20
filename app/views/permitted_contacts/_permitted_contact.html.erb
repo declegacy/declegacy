@@ -8,9 +8,9 @@
     <span style="color:orange"> User did not yet verify that he knows the secret</span>
   <% end %>
 
-  <% if permitted_contact.require_approval_to_decrypt_content %> 
-    <span style="color:blue">User is NOT yet allowed to decrypt secret content</span>
+  <% if permitted_contact.decrypt_access_granted_at %> 
+    <span style="color:red">User is allowed to decrypt secret content</span> 
   <% else %>
-    <span style="color:red">User is allowed to decrypt secret content</span>
+    <span style="color:blue">User is NOT yet allowed to decrypt secret content</span>
   <% end  %>
 </div>

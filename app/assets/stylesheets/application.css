@@ -27,3 +27,7 @@
   color: white;
   display: block;
  }
+
+ form.button_to {
+  display: inline;
+ }
