@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_20_150208) do
     t.datetime "verified_password_at"
     t.datetime "decrypt_access_requested_at"
     t.datetime "decrypt_access_granted_at"
+    t.datetime "decrypt_access_rejected_at"
     t.index ["crypted_note_id"], name: "index_permitted_contacts_on_crypted_note_id"
   end
 
