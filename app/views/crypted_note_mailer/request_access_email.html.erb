@@ -1,0 +1,14 @@
+Important message! <br/><br/>
+
+<%= @permitted_contact.email %> asked for decrypt permission and will get it automatically on <%= l @permitted_contact.decrypt_access_granted_at.to_date %> unless you manually reject it.  <br/><br/> 
+
+You can reject the permission by visiting this link: <br/><br/>
+
+https://declegacy.com/crypted_notes/<%= @crypted_note.id %>/permitted_contacts/<%= @permitted_contact %>/reject <br/><br/> 
+
+If you do not respond, our service will assume that access should be granted <b>automatically</b>. <br/><br/> 
+
+We hope that you are just testing this feature. <br/><br/> 
+
+Cheers,<br/>
+decLegacy.com

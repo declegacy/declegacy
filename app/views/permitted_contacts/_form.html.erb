@@ -13,7 +13,10 @@
 
   <div>
     <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email %><br/><br/>
+
+    <%= form.label :auto_grant_decrypt_permission_in_x_days_after_the_request %><br/>
+    <%= form.text_field :auto_grant_decrypt_permission_in_x_days_after_the_request%>
   </div>
 
   <br/>

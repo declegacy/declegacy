@@ -3,16 +3,27 @@ class PermittedContact < ApplicationRecord
   validates :email, format: {with: Devise.email_regexp}
 
   def request_for_access!
-    update!(decrypt_access_requested_at: Time.now)
+    update!(
+      decrypt_access_requested_at: Time.now,
+      decrypt_access_granted_at: Time.now + auto_grant_decrypt_permission_in_x_days_after_the_request.days
+    )
+
+    CryptedNoteMailer.request_access_email(self).deliver_later
   end
 
   def reject_access!
-    update!(decrypt_access_requested_at: nil, decrypt_access_rejected_at: Time.now)
+    update!(
+      decrypt_access_requested_at: nil,
+      decrypt_access_granted_at: nil,
+      decrypt_access_rejected_at: Time.now
+    )
   end
 
-  def auto_approve_decrypt_access_at
-    return nil unless decrypt_access_requested_at
+  def can_decrypt?
+    true if decrypt_access_granted_at && decrypt_access_granted_at < Time.now
+  end
 
-    decrypt_access_requested_at + 1.month
+  def verified_password?
+    verified_password_at
   end
 end

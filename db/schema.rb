@@ -10,19 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_20_150208) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_23_182612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "crypted_note_parts", force: :cascade do |t|
-    t.bigint "crypted_note_part_id"
-    t.text "crypted_content"
-    t.integer "part_index"
-    t.string "owner_email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["crypted_note_part_id"], name: "index_crypted_note_parts_on_crypted_note_part_id"
-  end
 
   create_table "crypted_notes", force: :cascade do |t|
     t.bigint "user_id"
@@ -37,13 +27,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_20_150208) do
   create_table "permitted_contacts", force: :cascade do |t|
     t.bigint "crypted_note_id", null: false
     t.string "email"
-    t.boolean "has_verified_password", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "verified_password_at"
     t.datetime "decrypt_access_requested_at"
     t.datetime "decrypt_access_granted_at"
     t.datetime "decrypt_access_rejected_at"
+    t.integer "auto_grant_decrypt_permission_in_x_days_after_the_request", default: 180
     t.index ["crypted_note_id"], name: "index_permitted_contacts_on_crypted_note_id"
   end
 

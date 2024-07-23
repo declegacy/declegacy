@@ -35,7 +35,7 @@ class PermittedContactsController < ApplicationController
   # PATCH/PUT /permitted_contacts/1
   def update
     if @permitted_contact.update(permitted_contact_params)
-      redirect_to @permitted_contact, notice: "Permitted contact was successfully updated.", status: :see_other
+      redirect_to crypted_notes_path, notice: "Permitted contact was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -51,10 +51,8 @@ class PermittedContactsController < ApplicationController
   end
 
   def verify_update
-    has_verified_password = params[:permitted_contact][:has_verified_password]
-
-    if has_verified_password
-      @permitted_contact.update!(has_verified_password: true, verified_password_at: Time.now)
+    if params[:permitted_contact][:has_verified_password]
+      @permitted_contact.update!(verified_password_at: Time.now)
     end
 
     redirect_to root_path, notice: "You successfully verifed the password"
@@ -63,7 +61,7 @@ class PermittedContactsController < ApplicationController
   def request_access
     @permitted_contact.request_for_access!
 
-    redirect_to root_path, notice: "We have requested decrypt request. If person will not reject the request in 1 month, you will be granted decrypt access automatically."
+    redirect_to root_path, notice: "We have requested decrypt request. If person will not reject the request until #{@permitted_contact.decrypt_access_granted_at.to_date}, you will be granted decrypt access automatically."
   end
 
   def reject_access
@@ -90,6 +88,6 @@ class PermittedContactsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def permitted_contact_params
-    params.require(:permitted_contact).permit(:email)
+    params.require(:permitted_contact).permit(:email, :auto_grant_decrypt_permission_in_x_days_after_the_request)
   end
 end
