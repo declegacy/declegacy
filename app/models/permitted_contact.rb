@@ -7,8 +7,6 @@ class PermittedContact < ApplicationRecord
       decrypt_access_requested_at: Time.now,
       decrypt_access_granted_at: Time.now + auto_grant_decrypt_permission_in_x_days_after_the_request.days
     )
-
-    CryptedNoteMailer.request_access_email(self).deliver_later
   end
 
   def reject_access!

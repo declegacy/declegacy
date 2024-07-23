@@ -26,6 +26,8 @@ class PermittedContactsController < ApplicationController
     @permitted_contact = @crypted_note.permitted_contacts.new(permitted_contact_params)
 
     if @permitted_contact.save
+      CryptedNoteMailer.grant_permission_email(@permitted_contact).deliver_later
+
       redirect_to crypted_note_permitted_contacts_path, notice: "Permitted contact was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -61,13 +63,15 @@ class PermittedContactsController < ApplicationController
   def request_access
     @permitted_contact.request_for_access!
 
+    CryptedNoteMailer.request_access_email(@permitted_contact).deliver_later
+
     redirect_to root_path, notice: "We have requested decrypt request. If person will not reject the request until #{@permitted_contact.decrypt_access_granted_at.to_date}, you will be granted decrypt access automatically."
   end
 
   def reject_access
     @permitted_contact.reject_access!
 
-    redirect_to root_path
+    redirect_to root_path, notice: "Access to crypted note for #{@permitted_contact.email} has been rejected"
   end
 
   private
