@@ -17,6 +17,9 @@ class CryptedNotesController < ApplicationController
 
   # GET /crypted_notes/1/edit
   def edit
+    @permitted_contact = @crypted_note.permitted_contacts.where(email: current_user.email)
+
+    @permitted_contact&.update(encrypted_content_accessed_at: Time.now)
   end
 
   # POST /crypted_notes or /crypted_notes.json

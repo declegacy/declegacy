@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_23_182612) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_23_223247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_23_182612) do
     t.datetime "decrypt_access_granted_at"
     t.datetime "decrypt_access_rejected_at"
     t.integer "auto_grant_decrypt_permission_in_x_days_after_the_request", default: 180
+    t.datetime "encrypted_content_accessed_at"
     t.index ["crypted_note_id"], name: "index_permitted_contacts_on_crypted_note_id"
   end
 

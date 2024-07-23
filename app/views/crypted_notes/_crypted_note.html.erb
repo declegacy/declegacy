@@ -18,7 +18,15 @@
 
     <% reqested_decrypt_contacts.each do |c| %>
       <% if c.can_decrypt? %>
-        <span style="color:red"><%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %></span>
+        <span style="color:red"><%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %>.</span>
+
+        <% if c.encrypted_content_accessed_at %>
+          <span style="color:red">User have ALREADY accessed decrypted content.</span>
+        <% else %>
+          <span style="color:red">User have NOT yet accessed decrypted content</span>
+          
+        <% end %>
+
       <% else %>
         <span style="color:red"><%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
       <% end %>
