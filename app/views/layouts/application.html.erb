@@ -15,10 +15,12 @@
     <body class="">
       <%= render "layouts/menu" %>
 
-      <div class="max-w-4xl  mt-12">
-        <%= button_to 'Logout', destroy_user_session_path, method: :delete, style: "float:right" if current_user %>
-        
-        <%= yield %>
+      <div class="max-w-4xl mt-12 mx-auto main-container">
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-6 sm:px-6">
+            <%= yield %>
+          </div>
+        </div>
       </div>
     </div>
   </body>
