@@ -13,7 +13,14 @@
     @apply mb-4 text-xl font-bold;
   }
 
- 
+  .component-list {
+    @apply text-gray-900 divide-y divide-gray-300;
+  }
+
+  .component-list .component-list-item {
+    /* @apply flex flex-col py-6; */
+    background: red;
+  }
 
   .main-container {
     a {
@@ -21,11 +28,19 @@
     }
   }
 
-  button, input[type="submit"], .btn-primary {
+  button, input[type="submit"], .btn-primary, .btn-sm {
     @apply bg-blue-500 hover:bg-blue-700 !text-white font-bold py-2 px-4 rounded cursor-pointer !no-underline;
+  }
+
+  .component-list button {
+    @apply py-1 px-2 text-xs
   }
 }
 
 body {
   background-color: #eee
+}
+
+.component-list .component-list-item{ 
+  /* background: red; */
 }
