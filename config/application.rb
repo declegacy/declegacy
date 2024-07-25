@@ -6,6 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+BASE_URL = Rails.env.production? ? "http://app.declegacy.com" : "http://localhost:3033"
 module Declegacy
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
