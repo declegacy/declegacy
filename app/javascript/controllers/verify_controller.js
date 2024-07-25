@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { getShortSHA256Hash } from "./shared_methods.js"
+import { getShortSHA256Hash } from "../shared_methods.js"
 
 export default class extends Controller {
   static targets = ['encryptionPassword', "hasVerifiedPassword"]
