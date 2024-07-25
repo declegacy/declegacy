@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+
+  h1 {
+    @apply mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900;
+  }
+  h2 {
+    @apply mb-4 text-2xl font-bold
+  }
+  h3 {
+    @apply mb-4 text-xl font-bold
+  }
+}
+
+body {
+  background-color: #eee
+}

@@ -5,13 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= button_to 'Logout', destroy_user_session_path, method: :delete, style: "float:right" if current_user %>
-    <%= yield %>
+  <% if current_user %>
+    <body class="">
+      <%= render "layouts/menu" %>
+
+      <div class="max-w-4xl  mt-12">
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, style: "float:right" if current_user %>
+        
+        <%= yield %>
+      </div>
+    </div>
   </body>
+  <% else %>
+    <body class="flex justify-center min-h-screen items-center">
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, style: "float:right" if current_user %>
+        
+        <%= yield %>
+      </div>
+    </body>
+  <% end %>
 </html>
