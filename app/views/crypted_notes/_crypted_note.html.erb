@@ -1,5 +1,5 @@
-<div id="<%= dom_id crypted_note %>">
-  <%= crypted_note.description %>
+<div id="<%= dom_id crypted_note %>" class="py-3">
+  
 
   <% 
     allow_decrypt = crypted_note.user == current_user 
@@ -10,46 +10,63 @@
     end 
   %>
 
-  <%= link_to "Decrypt", edit_crypted_note_path(crypted_note) if allow_decrypt %>
-  <% if crypted_note.user == current_user %>
-    <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note) %> 
+  <div class="flex justify-between">
+    <div><%= crypted_note.description %></div>
+    
 
-    <% reqested_decrypt_contacts = crypted_note.permitted_contacts.where('decrypt_access_requested_at IS NOT NULL') %> 
+    <div class="">
+    
+      <%= link_to "Decrypt", edit_crypted_note_path(crypted_note), class: "btn btn-xs" if allow_decrypt %>
+      <% if crypted_note.user == current_user %>
+        <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note), class: "btn btn-xs" %> 
+      <% end %>
+    </div>
+  </div>
 
-    <% reqested_decrypt_contacts.each do |c| %>
-      <% if c.can_decrypt? %>
-        <span style="color:red"><%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %>.</span>
+  <div>
+    <% if crypted_note.user == current_user %>
+      <% reqested_decrypt_contacts = crypted_note.permitted_contacts.where('decrypt_access_requested_at IS NOT NULL') %> 
 
-        <% if c.encrypted_content_accessed_at %>
-          <span style="color:red">User have ALREADY accessed decrypted content.</span>
+      <% reqested_decrypt_contacts.each do |c| %>
+        <% if c.can_decrypt? %>
+          <span style="color:red"><%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %>.</span>
+
+          <% if c.encrypted_content_accessed_at %>
+            <span style="color:red">User have ALREADY accessed decrypted content.</span>
+          <% else %>
+            <span style="color:red">User have NOT yet accessed decrypted content</span>
+            
+          <% end %>
+
         <% else %>
-          <span style="color:red">User have NOT yet accessed decrypted content</span>
-          
+          <div class="mt-4">
+            <%= render "warning" do %>
+              <%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
+              <div class="mt-4">
+                <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-
-      <% else %>
-        <span style="color:red"><%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
-      <% end %>
-
-      <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
-    <% end %>
-  <% else %>
-    <% unless allow_decrypt %>
-      <%= link_to "Verify", crypted_note_permitted_contact_verify_path(crypted_note, permitted_contact) %>
-      <% if permitted_contact.verified_password? %>
-        <span style="color:green"> Successfully verified on <%= l permitted_contact.verified_password_at.to_date %> </span>
-      <% end %>
-    <% end %>
-
-    <% if permitted_contact.decrypt_access_requested_at %> 
-      <% if permitted_contact.can_decrypt? %>
-         
-      <% else %>
-         <span style="color: orange">Decrypt access is pending and will be auto approved on <%= l permitted_contact.decrypt_access_granted_at.to_date %></span>
       <% end %>
     <% else %>
-      <%= button_to "Request Decrypt Permission", crypted_note_permitted_contact_request_access_path(crypted_note, permitted_contact), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+      <% unless allow_decrypt %>
+        <%= link_to "Verify", crypted_note_permitted_contact_verify_path(crypted_note, permitted_contact) %>
+        <% if permitted_contact.verified_password? %>
+          <span style="color:green"> Successfully verified on <%= l permitted_contact.verified_password_at.to_date %> </span>
+        <% end %>
+      <% end %>
+
+      <% if permitted_contact.decrypt_access_requested_at %> 
+        <% if permitted_contact.can_decrypt? %>
+          
+        <% else %>
+          <span style="color: orange">Decrypt access is pending and will be auto approved on <%= l permitted_contact.decrypt_access_granted_at.to_date %></span>
+        <% end %>
+      <% else %>
+        <%= button_to "Request Decrypt Permission", crypted_note_permitted_contact_request_access_path(crypted_note, permitted_contact), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+      <% end %>
     <% end %>
-  <% end %>
-  <%#= link_to "Decrypt", crypted_note %>
+    <%#= link_to "Decrypt", crypted_note %>
+  </div>
 </div>

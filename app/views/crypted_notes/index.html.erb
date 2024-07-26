@@ -1,13 +1,11 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Crypted notes</h1>
 
-<div id="crypted_notes">
+<div id="crypted_notes" class="component-list">
   <% @crypted_notes.each do |crypted_note| %>
-    <%= render crypted_note %>
+    <div class="component-list-item>"><%= render crypted_note %></div>
   <% end %>
 </div>
 
 <br/>
 
-<%= link_to "New crypted note", new_crypted_note_path %>
+<%= link_to "New crypted note", new_crypted_note_path, class: "btn-primary" %>

@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  h1 {
+    @apply mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900;
+  }
+  h2 {
+    @apply mb-4 text-2xl font-bold;
+  }
+  h3 {
+    @apply mb-4 text-xl font-bold;
+  }
+
+  .component-list {
+    @apply text-gray-900 divide-y divide-gray-300;
+  }
+
+  .component-list .component-list-item {
+    /* @apply flex flex-col py-6; */
+    background: red;
+  }
+
+  .main-container {
+    a {
+      @apply text-blue-700 underline
+    }
+  }
+
+  button, input[type="submit"], .btn-primary, .btn, .btn-sm, .btn-xs {
+    @apply bg-blue-500 hover:bg-blue-700 !text-white font-bold py-2 px-4  rounded-lg cursor-pointer !no-underline;
+  }
+
+  .alert button{
+    @apply text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium text-xs px-3 py-1.5 me-2 text-center inline-flex items-center
+  }
+
+  .component-list button, .btn-xs, .btn-sm {
+    @apply py-1 px-2 text-xs;
+  }
+
+
+}
+
+body {
+  background-color: #eee
+}
+
+.component-list .component-list-item{ 
+  /* background: red; */
+}
