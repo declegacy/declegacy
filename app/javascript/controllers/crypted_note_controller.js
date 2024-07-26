@@ -2,7 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 import { getShortSHA256Hash } from "shared_methods"
 
 export default class extends Controller {
-  static targets = [ 'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", "generatedContentContainer", "errorContent", "rawContentContainer", "submitContainer", "shortPasswordHash"]
+  static targets = [ 
+    'rawContent', 'encryptionPassword', 'cryptedContent', "codeTemplate", "generatedDecryptionCode", 
+    "generatedContentContainer", "generatedContentFieldsContainer", "generatedContentLinkContainer",
+    "errorContent", "rawContentContainer", 
+    "submitContainer", "shortPasswordHash"]
 
   connect() {
     if(this.cryptedContentTarget.value) {
@@ -23,6 +27,13 @@ export default class extends Controller {
     
 
     this.encryptionKey = null;
+  }
+
+  async showGeneratedContentFields(event) {
+    event.preventDefault();
+
+    this.generatedContentLinkContainerTarget.style.display = "none"
+    this.generatedContentFieldsContainerTarget.style.display = "block"
   }
 
   async tryToDecrypt(event) {

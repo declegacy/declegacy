@@ -28,13 +28,19 @@
     }
   }
 
-  button, input[type="submit"], .btn-primary, .btn-sm {
-    @apply bg-blue-500 hover:bg-blue-700 !text-white font-bold py-2 px-4 rounded cursor-pointer !no-underline;
+  button, input[type="submit"], .btn-primary, .btn, .btn-sm, .btn-xs {
+    @apply bg-blue-500 hover:bg-blue-700 !text-white font-bold py-2 px-4  rounded-lg cursor-pointer !no-underline;
   }
 
-  .component-list button {
-    @apply py-1 px-2 text-xs
+  .alert button{
+    @apply text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium text-xs px-3 py-1.5 me-2 text-center inline-flex items-center
   }
+
+  .component-list button, .btn-xs, .btn-sm {
+    @apply py-1 px-2 text-xs;
+  }
+
+
 }
 
 body {
