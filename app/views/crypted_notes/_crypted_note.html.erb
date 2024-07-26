@@ -16,9 +16,9 @@
 
     <div class="">
     
-      <%= link_to "Decrypt", edit_crypted_note_path(crypted_note) if allow_decrypt %>
+      <%= link_to "Decrypt", edit_crypted_note_path(crypted_note), class: "btn btn-xs" if allow_decrypt %>
       <% if crypted_note.user == current_user %>
-        <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note) %> 
+        <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note), class: "btn btn-xs" %> 
       <% end %>
     </div>
   </div>
@@ -39,10 +39,15 @@
           <% end %>
 
         <% else %>
-          <span style="color:red"><%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
+          <div class="mt-4">
+            <%= render "warning" do %>
+              <%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
+              <div class="mt-4">
+                <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-
-        <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
       <% end %>
     <% else %>
       <% unless allow_decrypt %>

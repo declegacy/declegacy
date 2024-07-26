@@ -13,27 +13,42 @@
   <% end %>
 
   <%# unless crypted_note.persisted? %>
-    <%= form.label :query, "Description:" %><br/>
-    <%= form.text_area :description %><br/><br/>
+    <%= form.label :query, "Title:" %><br/>
+    <%= form.text_field :description %>
+    <div class="text-xs mt-2">Title will be visible to shared contacts and will be stored on our servers unencrypted</div>
+    <br/>
 
   <div data-crypted-note-target="rawContentContainer">
-    <%= form.label :crypted_note_raw_content, "Raw Content (no encryption):" %><br/>
+    <%= form.label :crypted_note_raw_content, "Secured content:" %><br/>
     <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 200px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
-    <br/><br/>
+    <div class="text-xs mt-2">Secured content will be visible to selected conctacts only when you will not be able to reject decryption access to it for a longer period of time (in case of death). They will be able to decrypt the content only witn encryption password which you should share with them outside of DecLegacy.com (ideally not via internet). Value of this field is not sent to or stored on our servers. Without password it is impossible to decypt it</div>
+    <br/>
   </div>
   <%# end %>
 
   <%= render "password_fields", type: :crypted_note, form: form %>
+  <div class="text-xs mt-2">Encryption password is not sent or stored to our servers. If you loose your password or if your selected contacts will loose it, it will be impossible to decrypt secured content. We allow you to validate if selected contacts know encryption password without giving them ability to decrypt the content.</div>
+  <br/>
 
   <div data-crypted-note-target="generatedContentContainer">
-    <%= form.label :query, "Crypted Content:" %><br/>
-    <%= form.text_area :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %><br/><br/>
-    <div data-crypted-note-target="codeTemplate" style="display:none"><%= render "executable_code"%></div>
-    
-    <h3>Generated code (can be used in browser console with JS)</h3>
-    <code data-crypted-note-target="generatedDecryptionCode"></code>
+    <div data-crypted-note-target="generatedContentLinkContainer">
+      <a href="#" data-action="click->crypted-note#showGeneratedContentFields">Show encrypted contents</a>
+      <div class="text-xs mt-1 mb-4">You can see encrypted values which will be sent to our server</div>
 
-    <br/><br/>
+    </div>
+
+    <div data-crypted-note-target="generatedContentFieldsContainer" style="display:none">
+      <%= form.label :query, "Crypted Content:" %><br/>
+      <%= form.text_area :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %><br/><br/>
+      <div data-crypted-note-target="codeTemplate" style="display:none"><%= render "executable_code"%></div>
+      
+      <label>Generated backup code: </label>
+      <code data-crypted-note-target="generatedDecryptionCode" class="p-2 text-xs rounded"></code>
+
+      <div class="text-xs mt-2">You can copy and paste this code into your browser console and decrypt it with your password. We will send you copy of this code to your email address so you will be able to decrypt the secured contents even without DecLegacy.com</div>
+      
+      <br/>
+    </div>
   </div>
 
   <% if crypted_note.user == current_user %>
