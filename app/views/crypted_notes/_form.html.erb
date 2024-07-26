@@ -20,6 +20,7 @@
 
   <div data-crypted-note-target="rawContentContainer">
     <%= form.label :crypted_note_raw_content, "Secured Content:" %><br/>
+
     <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 200px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
     <div class="text-xs mt-2">Secured content will be visible to selected conctacts only when you will not be able to reject decryption access to it for a longer period of time (in case of death). They will be able to decrypt the content only witn encryption password which you should share with them outside of DecLegacy.com (ideally not via internet). Value of this field is not sent to or stored on our servers. Without password it is impossible to decypt it</div>
     <br/>
@@ -40,6 +41,7 @@
     <div data-crypted-note-target="generatedContentFieldsContainer" style="display:none">
       <%= form.label :query, "Crypted Content:" %><br/>
       <%= form.text_area :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %><br/><br/>
+
       <div data-crypted-note-target="codeTemplate" style="display:none"><%= code_block do render "executable_code"; end%></div>
       
       <label>Decryption JavaScript: </label>
