@@ -13,13 +13,12 @@
     @apply mb-4 text-xl font-bold;
   }
 
-  .component-list {
-    @apply text-gray-900 divide-y divide-gray-300;
+  .box-list {
+    @apply text-gray-900;
   }
 
-  .component-list .component-list-item {
-    /* @apply flex flex-col py-6; */
-    background: red;
+  .box-list-item {
+    @apply shadow-md mb-4 bg-slate-50 border-slate-800 p-4;
   }
 
   .main-container {
@@ -39,8 +38,4 @@
 
 body {
   background-color: #eee
-}
-
-.component-list .component-list-item{ 
-  /* background: red; */
 }

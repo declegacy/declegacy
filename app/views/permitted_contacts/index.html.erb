@@ -1,9 +1,11 @@
 
 <h1>Permitted contacts</h1>
 
-<div id="permitted_contacts">
+<div id="permitted_contacts" class="box-list">
   <% @permitted_contacts.each do |permitted_contact| %>
-    <%= render permitted_contact %>
+    <div class="box-list-item">
+      <%= render permitted_contact %>
+    </div>
   <% end %>
 </div>
 
