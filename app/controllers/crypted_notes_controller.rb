@@ -28,6 +28,8 @@ class CryptedNotesController < ApplicationController
 
     respond_to do |format|
       if @crypted_note.save
+        CryptedNoteMailer.grant_permission_email(@crypted_note).deliver_later
+
         # format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully created." }
         format.html { redirect_to crypted_notes_url, notice: "Crypted note was successfully created." }
 
@@ -44,6 +46,9 @@ class CryptedNotesController < ApplicationController
     raise "no access" if @crypted_note.user_id != current_user.id
 
     @crypted_note.update(crypted_note_params)
+
+    CryptedNoteMailer.grant_permission_email(@crypted_note).deliver_later
+
     redirect_to crypted_notes_url, notice: "Crypted note was successfully updated."
   end
 

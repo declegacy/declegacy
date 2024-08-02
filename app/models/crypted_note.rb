@@ -4,4 +4,9 @@ class CryptedNote < ApplicationRecord
   has_many :permitted_contacts
 
   validates :description, :crypted_content, presence: true
+
+  def backup_code
+    file_name = Rails.root.join(*%w[app views crypted_notes _executable_code.erb])
+    File.read(file_name).gsub("{{encrypted_content}}", crypted_content)
+  end
 end
