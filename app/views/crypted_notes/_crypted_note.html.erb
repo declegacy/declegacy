@@ -18,7 +18,7 @@
     
       <%= link_to "Decrypt", edit_crypted_note_path(crypted_note), class: "btn btn-xs" if allow_decrypt %>
       <% if crypted_note.user == current_user %>
-        <%= link_to "Permissions", crypted_note_permitted_contacts_path(crypted_note), class: "btn btn-xs" %> 
+        <%= link_to "Confidant Permissions", crypted_note_permitted_contacts_path(crypted_note), class: "btn btn-xs inline-block" %> 
       <% end %>
     </div>
   </div>

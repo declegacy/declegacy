@@ -1,11 +1,19 @@
-<h1>Crypted notes</h1>
+<h1>Your Secrets</h1>
 
-<div id="crypted_notes" class="box-list">
-  <% @crypted_notes.each do |crypted_note| %>
-    <div class="box-list-item"><%= render crypted_note %></div>
-  <% end %>
+<% if @crypted_notes.any? %>
+  <div id="crypted_notes" class="box-list">
+    <% @crypted_notes.each do |crypted_note| %>
+      <div class="box-list-item"><%= render crypted_note %></div>
+    <% end %>
+  </div>
+  <br/>
+<% else %>
+  <div>
+    You don't have any secrets. It is about a time to create your first one in only few seconds.
+  </div>
+<% end %>
+
+
+<div class="mt-5">
+  <%= link_to "Create New Secret", new_crypted_note_path, class: "btn-primary" %>
 </div>
-
-<br/>
-
-<%= link_to "New crypted note", new_crypted_note_path, class: "btn-primary" %>

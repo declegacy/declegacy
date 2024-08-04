@@ -1,4 +1,6 @@
 class CryptedNoteMailer < ApplicationMailer
+  include ApplicationHelper
+
   def request_access_email(permitted_contact)
     @crypted_note = permitted_contact.crypted_note
     @permitted_contact = permitted_contact
