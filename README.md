@@ -1,24 +1,28 @@
-# README
+# Info 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+***At some point, we will all face the inevitability of death, which can also occur unexpectedly. Often, we forget to share important secrets with our loved ones, such as crypto wallet backup keys, email password or the location of valuable items like gold. The damage can be irreversible.***
 
-Things you may want to cover:
+DecLegacy will help you prepare a strategy & logistics to share your important secrets with someone you trust in case of death or healthcare emergency.
 
-* Ruby version
+DecLegacy is a web-based application. You can use it without a need to install any software or extension on your computer.
 
-* System dependencies
+# Requirements 
 
-* Configuration
+- Ruby
+- Rails
+- Postgres
 
-* Database creation
+# Setup
 
-* Database initialization
+```
+bundle install
+rake db:setup
+```
 
-* How to run the test suite
+# How to run the project
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+./bin/dev
+```
 
-* Deployment instructions
 
-* ...
