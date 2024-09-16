@@ -1,0 +1,24 @@
+<% c = defined?(content) ? content : yield %>
+
+<% case color.to_s # a_variable is the variable we want to compare
+when "red" %>
+  <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-800" role="alert">
+    <%= render 'shared/alert_content', title:, content: c %>
+  </div>
+<% when "blue" %>
+  <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 border border-blue-800" role="alert">
+    <%= render 'shared/alert_content', title:, content: c %>
+  </div>
+<% when "orange" %>
+  <div class="flex items-center p-4 mb-4 text-sm text-orange-800 rounded-lg bg-orange-50 border border-orange-800" role="alert">
+    <%= render 'shared/alert_content', title:, content: c %>
+  </div>
+<% when "green" %>
+  <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-800" role="alert">
+    <%= render 'shared/alert_content', title:, content: c %>
+  </div>
+<% else %>
+  <div class="flex items-center p-4 mb-4 text-sm text-gray-800 rounded-lg bg-gray-50 border border-gray-800" role="alert">
+    <%= render 'shared/alert_content', title:, content: c %>
+  </div>
+<% end %>

@@ -1,17 +1,26 @@
 <div id="<%= dom_id permitted_contact %>">
-  <strong>Email:</strong> <%= permitted_contact.email %>
+  <div class="flex -m-4 mb-4 bg-slate-200 text-slate-500 rounded-t p-4">
+    <div class="flex-grow">
+      <h3 class="mb-0"><%= permitted_contact.email %></h3>
+    </div>
+    <div class="">
+      <%= link_to "Edit", edit_crypted_note_permitted_contact_path(@crypted_note, permitted_contact), class: "btn" %>
+    </div>
+  </div>
+
+  
 
   <% if permitted_contact.verified_password? %>
-    <span style="color:green"> Successfully verified that he knows encryption password on <%= l permitted_contact.verified_password_at.to_date %> </span>
+    <%= render 'shared/alert', color: 'green', title: "Success", content: "Successfully verified that he knows encryption password on #{l permitted_contact.verified_password_at.to_date}" %>
   <% else %>
-    <span style="color:orange"> User did not yet verify that he knows the secret</span>
+    <%= render 'shared/alert', color: 'orange', title: "Success", content: "User have not yet verified that he knows the encryption password" %>
   <% end %>
 
   <% if permitted_contact.decrypt_access_granted_at %> 
-    <span style="color:red">User is allowed to decrypt secret content</span> 
+    <%= render 'shared/alert', color: 'red', title: "Success", content: "User is allowed to decrypt the content" %>
   <% else %>
-    <span style="color:blue">User is NOT yet allowed to decrypt secret content</span>
+    <%= render 'shared/alert', color: 'blue', title: "Success", content: "Confidant have not yet requested access to your secrets. Access will be granted #{permitted_contact.auto_grant_decrypt_permission_in_x_days_after_the_request} days after the request." %>
   <% end  %>
 
-  <%= link_to "Edit", edit_crypted_note_permitted_contact_path(@crypted_note, permitted_contact), class: "btn-sm" %>
+ 
 </div>

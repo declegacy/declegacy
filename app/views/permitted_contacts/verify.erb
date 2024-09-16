@@ -10,7 +10,7 @@
 
   <%= form.hidden_field "has_verified_password",  data: { verify_target: "hasVerifiedPassword"} %>
 
-  <div>
+  <div class="mt-4">
     <%= form.submit "Verify password", data: { action: "verify#onSubmit:prevent"} %>
   </div>
 <% end %>

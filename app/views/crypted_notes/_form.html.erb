@@ -39,9 +39,9 @@
     </div>
 
     <div data-crypted-note-target="generatedContentFieldsContainer" style="display:none">
-      <%= form.label :query, "Crypted Content:" %><br/>
-      <%= form.text_area :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %><br/><br/>
-
+      <%#= form.label :query, "Crypted Content:" %><br/>
+      <%= form.hidden_field :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %>
+      
       <div data-crypted-note-target="codeTemplate" style="display:none"><%= code_block do render "executable_code"; end%></div>
       
       <label>Decryption JavaScript: </label>
