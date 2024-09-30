@@ -27,7 +27,7 @@
   </div>
   <%# end %>
 
-  <%= render "password_fields", type: :crypted_note, form: form %>
+  <%= render "password_fields", type: :crypted_note, form: form, show_password_strength: !@crypted_note.persisted? %>
   <div class="text-xs mt-2">Encryption password is not sent or stored to our servers. If you loose your password or if your selected contacts will loose it, it will be impossible to decrypt secured content. We allow you to validate if selected contacts know encryption password without giving them ability to decrypt the content.</div>
   <br/>
 

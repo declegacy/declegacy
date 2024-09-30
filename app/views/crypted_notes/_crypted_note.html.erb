@@ -1,6 +1,4 @@
 <div id="<%= dom_id crypted_note %>" class="py-3">
-  
-
   <% 
     allow_decrypt = crypted_note.user == current_user 
     permitted_contact = nil
@@ -25,6 +23,14 @@
 
   <div>
     <% if crypted_note.user == current_user %>
+      <% if crypted_note.permitted_contacts.empty? %>
+        <div class="mt-4">
+          <%= render 'shared/alert', color: 'red', title: "Nobody can help you out" do %>
+              There are not confidants which could restore this secret in case of unexpected events.
+          <% end %>
+        </div>
+      <% end %>
+
       <% reqested_decrypt_contacts = crypted_note.permitted_contacts.where('decrypt_access_requested_at IS NOT NULL') %> 
 
       <% reqested_decrypt_contacts.each do |c| %>
