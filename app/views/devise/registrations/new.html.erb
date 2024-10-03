@@ -21,13 +21,16 @@
 
         <div class="mb-4">
             <%= f.label :password, class: "block font-bold mb-2 text-gray-700 text-sm" %>
-            <% if @minimum_password_length %>
-                <small><em class="text-gray-600">(<%= @minimum_password_length %> characters minimum)</em></small>
-            <% end %>
             <%= f.password_field :password,
                                  autocomplete: "new-password",
                                  class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             %>
+
+            <% if @minimum_password_length %>
+                <div class="-mt-2">
+                    <small><em class="text-gray-600">(<%= @minimum_password_length %> characters minimum)</em></small>
+                </div>
+            <% end %>
         </div>
 
         <div class="mb-4">

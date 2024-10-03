@@ -28,7 +28,7 @@ class CryptedNotesController < ApplicationController
 
     respond_to do |format|
       if @crypted_note.save
-        CryptedNoteMailer.grant_permission_email(@crypted_note).deliver_later
+        CryptedNoteMailer.secret_backup_email(@crypted_note).deliver_later
 
         # format.html { redirect_to crypted_note_url(@crypted_note), notice: "Crypted note was successfully created." }
         format.html { redirect_to crypted_notes_url, notice: "Crypted note was successfully created." }

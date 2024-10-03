@@ -19,10 +19,10 @@
     <br/>
 
   <div data-crypted-note-target="rawContentContainer">
-    <%= form.label :crypted_note_raw_content, "Secured Content:" %><br/>
+    <%= form.label :crypted_note_raw_content, "Secret Content:" %><br/>
 
-    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 200px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
-    <div class="text-xs mt-2">Secured content will be visible to selected conctacts only when you will not be able to reject decryption access to it for a longer period of time (in case of death). They will be able to decrypt the content only witn encryption password which you should share with them outside of DecLegacy.com (ideally not via internet). Value of this field is not sent to or stored on our servers. Without password it is impossible to decypt it</div>
+    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 100px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+    <div class="text-xs mt-2">Secret content will be stored on <em>DecLegacy</em> encrypted. Confidants will be able decrypt it if you become non responsive. Unencrypted value is not sent to or stored on our server.</div>
     <br/>
   </div>
   <%# end %>
@@ -34,12 +34,12 @@
   <div data-crypted-note-target="generatedContentContainer">
     <div data-crypted-note-target="generatedContentLinkContainer">
       <a href="#" data-action="click->crypted-note#showGeneratedContentFields">Show encrypted contents</a>
-      <div class="text-xs mt-1 mb-4">You can see encrypted values which will be sent to our server</div>
+      <div class="text-xs mt-1 mb-4">Encrypted content which will be saved on DecLeagacy and sent to your email which allows you to retreive the secret without DecLegacy.</div>
 
     </div>
 
     <div data-crypted-note-target="generatedContentFieldsContainer" style="display:none">
-      <%#= form.label :query, "Crypted Content:" %><br/>
+      <%#= form.label :query, "Crypted Content:" %>
       <%= form.hidden_field :crypted_content, readonly: true, data: {crypted_note_target: :cryptedContent} %>
       
       <div data-crypted-note-target="codeTemplate" style="display:none"><%= code_block do render "executable_code"; end%></div>
@@ -48,7 +48,7 @@
       <div data-crypted-note-target="generatedDecryptionCode"></div>
 
       <div class="text-xs mt-2">
-        We will send you a copy of this snippet to your email. This will allow you to reveal the secret outside of DecLegacy as well.<br/><br/>
+        We will send you a copy of this snippet to your email. This allows you to retreive the secret without DecLegacy.<br/><br/>
         <%= render "code_block_instructions" %>
       </div>
       

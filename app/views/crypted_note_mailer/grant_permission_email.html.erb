@@ -1,10 +1,10 @@
 Important! <br/><br/>
 
-You have been choosen as a person who will be able to decrypt some important information for <%= @crypted_note.user.email %>.<br/><br/>
+You have been choosen as a person who will be able to decrypt important secret for <%= @crypted_note.user.email %>.<br/><br/>
 
-You should receive decription password offline and can verify that you know it without revealing secret content on <%= BASE_URL%>. <br/><br/>
+You should receive decription password offline and you can verify that you know it without revealing secret content on <%= BASE_URL%>. <br/><br/>
 
-You will be able to reveal (decrypt) the secr3et only when <%= @crypted_note.user.email %> will not be responsive for <%= @crypted_note.auto_grant_decrypt_permission_in_x_days_after_the_request %> for days. <br/><br/>
+You will be able to reveal the secret when <%= @crypted_note.user.email %> will be non responsive for <%= @permitted_contact.auto_grant_decrypt_permission_in_x_days_after_the_request %> for days. <br/><br/>
 
 Cheers,
 DecLegacy
