@@ -21,8 +21,18 @@
   <div data-crypted-note-target="rawContentContainer">
     <%= form.label :crypted_note_raw_content, "Secret Content:" %><br/>
 
-    <textarea id="crypted_note_raw_content" data-crypted-note-target="rawContent" data-action="input->crypted-note#tryToEncrypt" style="height: 100px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
-    <div class="text-xs mt-2">Secret content will be stored on <em>DecLegacy</em> encrypted. Confidants will be able decrypt it if you become non responsive. Unencrypted value is not sent to or stored on our server.</div>
+    <div data-controller="mask-textarea">
+      <textarea 
+        id="crypted_note_raw_content"
+        data-controller="textarea-auto-resize"
+        data-crypted-note-target="rawContent"
+        data-mask-textarea-target="input"
+        data-action="input->crypted-note#tryToEncrypt blur->mask-textarea#hide focus->mask-textarea#show input->textarea-auto-resize#resize" 
+        style="min-height: 120px"></textarea> <!-- name attribute should not be saved in order to not set it to server -->
+      <%= render "hide_show", controller_type: "textarea" %>
+    </div>
+
+    <div class="text-xs mt-2">Secret content will be stored on <em>DecLegacy</em> encrypted. Confidants will be able decrypt it if you become unresponsive. Unencrypted value is not sent to or stored on our server.</div>
     <br/>
   </div>
   <%# end %>

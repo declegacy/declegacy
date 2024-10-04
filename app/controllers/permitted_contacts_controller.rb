@@ -1,7 +1,7 @@
 class PermittedContactsController < ApplicationController
   before_action :set_crypted_note, except: [:verify, :verify_update, :request_access]
   before_action :set_crypted_note_for_permitted_contact, only: [:verify, :verify_update, :request_access]
-  before_action :set_permitted_contact, only: %i[show edit update destroy reject_access]
+  before_action :set_permitted_contact, only: %i[show edit update destroy reject_access approve_access]
 
   # GET /permitted_contacts
   def index
@@ -71,7 +71,13 @@ class PermittedContactsController < ApplicationController
   def reject_access
     @permitted_contact.reject_access!
 
-    redirect_to root_path, notice: "Access to crypted note for #{@permitted_contact.email} has been rejected"
+    redirect_to root_path, notice: "Access to the secret for #{@permitted_contact.email} has been rejected"
+  end
+
+  def approve_access
+    @permitted_contact.approve_access!
+
+    redirect_to root_path, notice: "Access to the secret for #{@permitted_contact.email} has been granted"
   end
 
   private

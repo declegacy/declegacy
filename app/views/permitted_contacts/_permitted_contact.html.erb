@@ -17,7 +17,11 @@
   <% end %>
 
   <% if permitted_contact.decrypt_access_granted_at %> 
-    <%= render 'shared/alert', color: 'red', title: "Success", content: "User is allowed to decrypt the content" %>
+    <% if permitted_contact.decrypt_access_granted_at < Time.now %>
+      <%= render 'shared/alert', color: 'red', title: "Success", content: "User is allowed to decrypt the content" %>
+    <% else %>
+      <%= render 'shared/alert', color: 'red', title: "Success", content: "User will be granted with access on #{l(permitted_contact.decrypt_access_granted_at.to_date)}" %>
+    <% end %>
   <% else %>
     <%= render 'shared/alert', color: 'blue', title: "Success", content: "Confidant have not yet requested access to your secrets. Access will be granted #{permitted_contact.auto_grant_decrypt_permission_in_x_days_after_the_request} days after the request." %>
   <% end  %>

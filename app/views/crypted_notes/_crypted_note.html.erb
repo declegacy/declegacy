@@ -9,7 +9,12 @@
   %>
 
   <div class="flex justify-between">
-    <div><%= crypted_note.description %></div>
+    <div>
+      <%= crypted_note.description %>
+      <% if crypted_note.user != current_user %>
+        <span class="bg-gray-300 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded"><%= crypted_note.user.email %></span>
+      <% end %>
+    </div>
     
     <div class="">
       <%= link_to "Decrypt", edit_crypted_note_path(crypted_note), class: "btn btn-xs" if allow_decrypt %>
@@ -25,8 +30,8 @@
     <% if crypted_note.user == current_user %>
       <% if crypted_note.permitted_contacts.empty? %>
         <div class="mt-4">
-          <%= render 'shared/alert', color: 'red', title: "Nobody can help you out" do %>
-              There are not confidants which could restore this secret in case of unexpected events.
+          <%= render 'shared/alert', color: 'orange', title: "Nobody can help you out" do %>
+              There are no confidants which could retreive the secret in case of unexpected events.
           <% end %>
         </div>
       <% end %>
@@ -35,21 +40,25 @@
 
       <% reqested_decrypt_contacts.each do |c| %>
         <% if c.can_decrypt? %>
-          <span style="color:red"><%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %>.</span>
+          <div class="mt-2">
+            <%= render 'shared/alert', color: 'red', title: "Nobody can help you out" do %>
+              <%= c.email %> is allowed to decrypt the content since <%= l c.decrypt_access_granted_at.to_date %>.
 
-          <% if c.encrypted_content_accessed_at %>
-            <span style="color:red">User have ALREADY accessed decrypted content.</span>
-          <% else %>
-            <span style="color:red">User have NOT yet accessed decrypted content</span>
-            
-          <% end %>
-
+              <% if c.encrypted_content_accessed_at %>
+                  Confidant have ALREADY accessed decrypted content on <%= l c.encrypted_content_accessed_at.to_date%>.
+              <% else %>
+                  Confidant have NOT yet accessed decrypted content.
+              <% end %>
+            <% end %>
+          </div>
         <% else %>
           <div class="mt-4">
             <%= render "warning" do %>
               <%= c.email %> requested decrypt permission and will gain it <b>automatically</b> on <%= l c.decrypt_access_granted_at.to_date %> unless you reject it</span>
               <div class="mt-4">
-                <%= button_to "Reject grant", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure?'}}   %>
+                <%= button_to "Reject Access", crypted_note_permitted_contact_reject_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure to reject the access?'}}   %>
+                <%= button_to "Approve Access Immediatelly", crypted_note_permitted_contact_approve_access_path(crypted_note, c), method: :post, form: {data: {turbo_confirm: 'Are you sure to grant the access?'}}   %>
+              
               </div>
             <% end %>
           </div>
@@ -67,7 +76,7 @@
             <% end %>
           <% else %>
             
-              <%= render "warning" do %>
+              <%= render 'shared/alert', color: 'orange', title: "Success" do %>
                   You can verify that you know password without revealing the secret. 
 
                   <div class="mt-4">

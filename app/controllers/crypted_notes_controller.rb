@@ -3,7 +3,10 @@ class CryptedNotesController < ApplicationController
 
   # GET /crypted_notes or /crypted_notes.json
   def index
-    @crypted_notes = base_query
+    @crypted_notes = current_user.crypted_notes
+
+    permitted_ids = PermittedContact.where(email: current_user.email).pluck(:crypted_note_id)
+    @shared_crypted_notes = CryptedNote.where(id: permitted_ids)
   end
 
   # GET /crypted_notes/1 or /crypted_notes/1.json
@@ -69,12 +72,6 @@ class CryptedNotesController < ApplicationController
     permitted_ids = PermittedContact.where(email: current_user.email).where("decrypt_access_granted_at IS NOT NULL").pluck(:crypted_note_id)
 
     @crypted_note = CryptedNote.where("user_id = ? or id IN(?)", current_user.id, permitted_ids).find(params[:id])
-  end
-
-  def base_query
-    permitted_ids = PermittedContact.where(email: current_user.email).pluck(:crypted_note_id)
-
-    CryptedNote.where("user_id = ? or id IN(?)", current_user.id, permitted_ids)
   end
 
   # Only allow a list of trusted parameters through.

@@ -1,10 +1,8 @@
-Important! <br/><br/>
+<b>Important!</b> <br/><br/>
 
-You have been choosen as a person who will be able to decrypt important secret for <%= @crypted_note.user.email %>.<br/><br/>
+<b> <%= @crypted_note.user.email %></b> has choosen you as a person who will be able to decrypt important secret in case of death or unexpected events.<br/><br/>
 
-You should receive decription password offline and you can verify that you know it without revealing secret content on <%= BASE_URL%>. <br/><br/>
+To reveal the secret, you will need the decryption password, which will be provided to in person (offline) by <%= @crypted_note.user.email %>.<br/><br/>
+You can verify that you have the correct password without revealing the secret content by visiting <%= link_to BASE_URL, BASE_URL %>. <br/><br/>
 
-You will be able to reveal the secret when <%= @crypted_note.user.email %> will be non responsive for <%= @permitted_contact.auto_grant_decrypt_permission_in_x_days_after_the_request %> for days. <br/><br/>
-
-Cheers,
-DecLegacy
+You will be able to access the secret if <%= @crypted_note.user.email %> will be unresponsive for <b><%= @permitted_contact.auto_grant_decrypt_permission_in_x_days_after_the_request %> days</b>.

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         post "request_access", to: "request_access"
         post "reject_access", to: "reject_access"
         get "reject_access"
+        post "approve_access", to: "approve_acces"
       end
     end
   end

@@ -38,6 +38,9 @@ export default class extends Controller {
     if (timeInSeconds < 60) {
       message = "Password strength is very low. It would require less then a minute to brute force this password." 
     }
+    if (timeInYears > 1e12) {
+      message = "Password strength is very good." 
+    }
 
     if(timeInYears > 100) {
       this.resultTarget.classList.remove("text-red-500")

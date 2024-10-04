@@ -35,6 +35,10 @@
     @apply text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium text-xs px-3 py-1.5 me-2 text-center inline-flex items-center
   }
 
+  .bg-orange-50 button, .bg-orange-50 .btn{
+    @apply text-white bg-orange-800 hover:bg-orange-900 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium text-xs px-3 py-1.5 me-2 text-center inline-flex items-center
+  }
+
   .component-list button, .btn-xs, .btn-sm {
     @apply py-1 px-2 text-xs;
   }

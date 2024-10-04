@@ -6,11 +6,16 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-BASE_URL = Rails.env.production? ? "http://app.declegacy.com" : "http://localhost:3033"
+BASE_URL = (Rails.env.production? || true) ? "https://app.declegacy.com" : "http://localhost:3000"
+
 module Declegacy
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+
+    uri = URI.parse(BASE_URL)
+    config.action_mailer.default_url_options = {host: uri.host, protocol: uri.scheme, port: uri.port}
+    config.default_url_options = config.action_mailer.default_url_options
 
     # Configuration for the application, engines, and railties goes here.
     #

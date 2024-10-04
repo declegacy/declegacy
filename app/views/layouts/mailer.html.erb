@@ -3,11 +3,33 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      /* Email styles need to be inline */
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        text-size: 11px;
+        background-color: #eee;
+        text-color: #222;
+      }
+
+      .container {
+        background: white;
+        border: 1px solid #aaa;
+        padding: 32px;
+        margin: 50px auto;
+        width: 600px;
+        border-radius: 12px;
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+
+      <br/><br/>
+      <div style="color: #777; text-size: 12px">
+        Cheers,<br/>
+        DecLegacy
+      </div>
+    </div>
   </body>
 </html>

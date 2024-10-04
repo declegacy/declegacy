@@ -17,6 +17,13 @@ class PermittedContact < ApplicationRecord
     )
   end
 
+  def approve_access!
+    update!(
+      decrypt_access_granted_at: Time.now,
+      decrypt_access_rejected_at: nil
+    )
+  end
+
   def can_decrypt?
     true if decrypt_access_granted_at && decrypt_access_granted_at < Time.now
   end

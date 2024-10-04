@@ -1,12 +1,8 @@
-Important message! <br/><br/>
+<b>Important message</b><br/><br/>
 
-<%= @permitted_contact.email %> asked for decrypt permission and will get it automatically on <%= l @permitted_contact.decrypt_access_granted_at.to_date %> unless you manually reject it.  <br/><br/> 
+<b><%= @permitted_contact.email %></b> has requested decryption permission, which will be automatically granted on <%= l @permitted_contact.decrypt_access_granted_at.to_date %> unless you manually reject it.  <br/><br/> 
 
-You can reject the permission by visiting this link: <br/><br/>
+To reject this permission, please visit the following link: <br/><br/>
 
-<%= BASE_URL %>/crypted_notes/<%= @crypted_note.id %>/permitted_contacts/<%= @permitted_contact.id %>/reject_access <br/><br/> 
-
-We hope that you are just testing this feature. <br/><br/> 
-
-Cheers,<br/>
-decLegacy.com
+<% url = crypted_note_permitted_contact_reject_access_url(@crypted_note, @permitted_contact) %>
+<%= link_to url, url %>
