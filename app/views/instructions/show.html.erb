@@ -1,0 +1,26 @@
+<h1>Important Secrets of <%= current_user.email %></h1>
+
+<p class="mb-2">
+  You have been selected as a trusted person to retrieve important secrets in the event of death or serious health issues.
+</p>
+
+<p class="mb-2">
+  You can access the information at https://declegacy.com using your email address and the decryption password provided below. 
+  Once the system confirms that <%= current_user.email %> is unresponsive, you will be granted access to the stored secrets.
+</p>
+
+<p class="mb-2">
+  To decrypt the information, you will need the following password. Please store it securely, 
+  as it is essential for accessing the content.
+</p>
+
+<p class="mt-4 mb-2">
+  <b>Decryption password:</b>
+</p>
+
+<div class="mb-6 mt-6" style="width: 100%; height: 60px; border: 2px solid red"></div>
+
+<p class="mb-2">
+  Note: All information stored on DecLegacy is also available and encrypted in the email inbox of <%= current_user.email %>. 
+  If you have access to that inbox (e.g. your email is also a recovery email), you can retrieve the information without using DecLegacy.
+</p>

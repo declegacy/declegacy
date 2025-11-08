@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :instruction
+
   get "/crypted_notes/*whatever", to: redirect("/users/sign_in")
   root to: redirect("/users/sign_in")
 end
