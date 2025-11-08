@@ -77,5 +77,8 @@ end
 gem "devise", "~> 4.9"
 gem "sendgrid-ruby"
 
+gem "sentry-ruby"
+gem "sentry-rails"
+
 gem "tailwindcss-rails", "~> 2.6"
 gem "devise-tailwindcssed"

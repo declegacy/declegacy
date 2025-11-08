@@ -11,6 +11,7 @@
     <%= javascript_importmap_tags %>
 
     <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
+    <%#= Sentry.get_trace_propagation_meta.html_safe # rather do use 3rd party JS %>
   </head>
 
   <% if current_user %>
