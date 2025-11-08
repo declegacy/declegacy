@@ -101,6 +101,14 @@ GEM
       railties (> 4.0, <= 7.3)
     diff-lcs (1.5.1)
     erubi (1.13.0)
+    faraday (2.14.0)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-multipart (1.1.1)
+      multipart-post (~> 2.0)
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
@@ -113,11 +121,13 @@ GEM
     irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    json (2.16.0)
     launchy (3.0.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
+    logger (1.7.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -126,12 +136,19 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mailgun-ruby (1.4.0)
+      faraday (~> 2.1)
+      faraday-multipart (~> 1.1.0)
+      mini_mime
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.24.1)
     msgpack (1.7.2)
+    multipart-post (2.4.1)
+    net-http (0.7.0)
+      uri
     net-imap (0.4.14)
       date
       net-protocol
@@ -216,14 +233,11 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
-    ruby_http_client (3.5.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sendgrid-ruby (6.7.0)
-      ruby_http_client (~> 3.4)
     sentry-rails (6.1.0)
       railties (>= 5.2.0)
       sentry-ruby (~> 6.1.0)
@@ -255,6 +269,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (1.1.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -287,13 +302,13 @@ DEPENDENCIES
   devise-tailwindcssed
   importmap-rails
   letter_opener
+  mailgun-ruby (~> 1.2)
   pg
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   redis (~> 4.0)
   rspec-rails (~> 6.1.0)
   selenium-webdriver
-  sendgrid-ruby
   sentry-rails
   sentry-ruby
   sprockets-rails

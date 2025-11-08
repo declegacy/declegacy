@@ -75,7 +75,7 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
-gem "sendgrid-ruby"
+gem "mailgun-ruby", "~> 1.2"
 
 gem "sentry-ruby"
 gem "sentry-rails"
