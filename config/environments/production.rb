@@ -72,7 +72,7 @@ Rails.application.configure do
     domain: ENV['MAILGUN_DOMAIN'],
     enable_starttls_auto: true,
     user_name: "postmaster@#{ENV['MAILGUN_DOMAIN']}",
-    password: ENV['MAILGUN_API_KEY'],
+    password: ENV['MAILGUN_SMTP_PASSWORD'], # available in Mailgun->Sending->Domain Settings->SMTP Credentials (do not use API KEY)
     authentication: :plain
   }
 
