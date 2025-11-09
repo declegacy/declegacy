@@ -65,16 +65,19 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: ENV['MAILGUN_SMTP_LOGIN'] || "postmaster@#{ENV['MAILGUN_DOMAIN']}",
-    password: ENV['MAILGUN_SMTP_PASSWORD'],
-    domain: ENV['MAILGUN_DOMAIN'],
+
+  smtp_settings = {
     address: 'smtp.mailgun.org',
     port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+    domain: ENV['MAILGUN_DOMAIN'],
+    enable_starttls_auto: true,
+    user_name: "postmaster@#{ENV['MAILGUN_DOMAIN']}",
+    password: ENV['MAILGUN_API_KEY'],
+    authentication: :plain
   }
 
+
+  config.action_mailer.smtp_settings = smtp_settings
   config.action_mailer.default_url_options = { host: 'app.declegacy.com' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
