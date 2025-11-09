@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "noreply@declegacy.com"
+  default from: "postmaster@#{ENV['MAILGUN_DOMAIN']}"
   layout "mailer"
 
   helper :application
